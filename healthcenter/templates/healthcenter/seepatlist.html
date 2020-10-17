@@ -1,0 +1,81 @@
+<!doctype html>
+{% load static %}
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+    <meta name="generator" content="Jekyll v3.8.5">
+    <title>See patient list</title>
+
+    <link rel="canonical" href="https://getbootstrap.com/docs/4.3/examples/checkout/">
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" >
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" ></script>
+    <!-- Bootstrap core CSS -->
+
+
+    <style>
+      .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+      }
+
+      @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+      }
+    </style>
+    <!-- Custom styles for this template -->
+    <link href="{% static 'healthcenter/form-validation.css' %}" rel="stylesheet">
+  </head>
+  <body class="bg-light">
+    <div class="container">
+  <div class="py-5 text-center">
+    <img class="d-block mx-auto mb-4" src="{% static 'healthcenter/images/logo.png' %}" alt="" width="72" height="72">
+    <h2>See patient list for {{nomenclature}} on {{date}}</h2>
+  </div>
+  <script>
+      var opds= "{{opds}}";
+      console.log(opds);
+  </script>
+
+  <div class="table-responsive">
+    <table class="table table-striped table-sm">
+        <thead>
+            <tr>
+            <th>Serial No.</th>
+            <th>Name</th>
+            <th>See history</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for pat in opds %}
+            <tr>
+                <td>
+                    {{forloop.counter}}
+                </td>
+                <td>
+                    {{pat.patient.name}}
+                </td>
+                <td>
+                  <a href="/hc/gethistory?cno={{pat.patient.cardNo}}">See history</a>
+                </td> 
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+  </div>
+
+  
+</div>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+      <script>window.jQuery || document.write('<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"><\/script>')</script>
+        <script src="{% static 'healthcenter/form-validation.js' %}"></script></body>
+</html>

@@ -1,0 +1,206 @@
+<!doctype html>
+{% load static %}
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+    <meta name="generator" content="Jekyll v3.8.5">
+    <title>Health Center - MNNIT</title>
+
+    <link rel="canonical" href="https://getbootstrap.com/docs/4.3/examples/dashboard/">
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" >
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" ></script>
+    <!-- Bootstrap core CSS -->
+    <style>
+      .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+      }
+      .datepicker td, .datepicker th {
+    width: 2.5rem;
+    height: 2.5rem;
+    font-size: 0.85rem;
+}
+
+.datepicker-dropdown {
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+}
+.datepicker {
+    margin-bottom: 3rem;
+}
+
+
+
+      @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+      }
+    </style>
+    <!-- Custom styles for this template -->
+    <link href="{% static 'healthcenter/dashboard.css' %}" rel="stylesheet">
+  </head>
+  <body>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <nav class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
+  <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#">MNNIT Health Center Portal</a>
+  <ul class="navbar-nav px-3">
+    <li class="nav-item text-nowrap">
+      <a class="nav-link" href="/accounts/logout">Sign out</a>
+    </li>
+  </ul>
+</nav>
+
+<div class="container-fluid">
+  <div class="row">
+    <nav class="col-md-2 d-none d-md-block bg-light sidebar">
+      <div class="sidebar-sticky">
+        <ul class="nav flex-column">
+          <li class="nav-item">
+            <a class="nav-link active" href="#">
+              <span data-feather="home"></span>
+              Dashboard <span class="sr-only">(current)</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href ="/hc/medavail" class="nav-link" >
+              <span data-feather="file"></span>
+              Check medicine availability
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/hc/feedback">
+              <span data-feather="file"></span>
+              Add feedback
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" data-toggle="collapse" href="#multiCollapseExample1" role="button" aria-expanded="false" aria-controls="multiCollapseExample1">
+              <span data-feather="file"></span>
+              See patient list
+            </a>
+            <div class="collapse multi-collapse" id="multiCollapseExample1">
+              <div class="card card-body">
+                <div class="py-2 text-center"><i class="fa fa-calendar fa-3x"></i></div>
+                <form method="POST" action="/hc/seepatlist?docid={{doc.id}}">{% csrf_token %}
+                <div class="form-group mb-2">
+                  <div class="datepicker date input-group p-0 shadow-sm">
+                      <input type="text" placeholder="Choose date" class="form-control py-3 px-1" id="reservationDate" name="dt">
+                      <div class="input-group-append"><span class="input-group-text px-2"><i class="fa fa-clock-o"></i></span></div>
+                  </div>
+              </div>
+              <script>
+                var doc="{{doc}}";
+                console.log(doc);
+              </script>
+
+              <div class="text-center">
+                <button type="submit"  class="btn btn-primary btn-sm px-3 rounded-pill text-uppercase font-weight-bold shadow-sm">Go!</button>
+              </form>
+            </div>
+            </div>
+          </li>
+        </ul>
+
+        
+      </div>
+    </nav>
+
+    <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+      <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+          <div class="alert alert-primary" role="alert">
+        <h1 class="h2">{{msg}}</h1>
+          </div> 
+        
+      </div>
+
+      <h2>Live Patients</h2><br>
+      <div class="table-responsive">
+          <table class="table table-striped table-sm">
+            <thead>
+              <tr>
+                <th>Serial No.</th>
+                <th>Name</th>
+                <th>Status</th>
+                <th>Transfer</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for p in live_pat_list %}
+              <tr>
+                <td>{{forloop.counter}}</td>
+                <td>{{p.patient.name}}</td>
+                {% if p.checked %}
+                <td>Diagnosis Complete</td>
+                {% else %}
+                <td><a href="/hc/diagnose?opdid={{p.id}}">Diagnose</a></td>
+                {% endif %}
+                <td><a href="/hc/transfer?opdid={{p.id}}">Transfer</a></td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div><br>
+        <hr>
+      <h2>Registered Patients</h2><br>
+      <div class="table-responsive">
+          <table class="table table-striped table-sm">
+            <thead>
+              <tr>
+                <th>Serial No.</th>
+                <th>Name</th>
+                <th>Registration Date</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for p in pat_list %}
+              <tr>
+                <td>{{forloop.counter}}</td>
+                <td>{{p.patient.name}}</td>
+                <td>{{p.registration_date}}</td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+    </main>
+  </div>
+</div>
+<script>
+  $(function () {
+
+// INITIALIZE DATEPICKER PLUGIN
+$('.datepicker').datepicker({
+clearBtn: true,
+format: "dd/mm/yyyy"
+});
+
+
+// FOR DEMO PURPOSE
+$('#reservationDate').on('change', function () {
+var pickedDate = $('input').val();
+$('#pickedDate').html(pickedDate);
+});
+});
+</script>
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        <script>window.jQuery || document.write('<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"><\/script>')</script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" ></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.9.0/feather.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.min.js"></script>
+        <script src="{% static 'healthcenter/dashboard.js' %}"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.css">
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+      </body>
+</html>

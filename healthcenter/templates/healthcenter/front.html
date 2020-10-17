@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Health Center - MNNIT</title>
+  <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Open+Sans|Raleway|Candal">
+  <link rel="stylesheet" type="text/css" href="{% static 'healthcenter/font-awesome.min.css' %}">
+  <link rel="stylesheet" type="text/css" href="{% static 'healthcenter/bootstrap.min.css' %}">
+  <link rel="stylesheet" type="text/css" href="{% static 'healthcenter/styless.css' %}">
+</head>
+
+<body id="myPage" data-spy="scroll" data-target=".navbar" data-offset="60">
+
+  <!--banner-->
+  <section id="banner" class="banner">
+    <div class="bg-color">
+      <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container">
+          <div class="col-md-12">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+				        <span class="icon-bar"></span>
+				        <span class="icon-bar"></span>
+				        <span class="icon-bar"></span>
+				      </button>
+            </div>
+            <div class="collapse navbar-collapse navbar-right" id="myNavbar">
+              <ul class="nav navbar-nav">
+                <li class="active"><a href="/accounts/login/">User Login</a></li>
+                <li class=""><a href="/hc/dashboard">Dashboard</a></li>
+                <li class=""><a href="/admin/">Administration</a></li>
+                <li class=""><a href="/hc/graph">Statistics and Visualizations</a></li>
+                <li class=""><a href="/hc/patientreg">Patient Registration</a></li>
+                <li class=""><a href="/hc/feedback">Feedback</a></li>
+              </ul>
+            </div>  
+          </div>
+        </div>
+      </nav>
+      <div class="container">
+        <div class="row">
+          <div class="banner-info">
+            <div class="banner-logo text-center">
+              <div class="alert alert-light" role="alert">
+                <font size=5 color='white'><b>{{msg}}</b></font>
+              </div>
+              <div class="alert alert-light" role="alert">
+                <marquee width="100%" direction="left" height="30px">
+                  <font size=5 color='orange'>Latest News :{% for h in art%} <a href={{h.link}} style="color:red">{{h.headline}} </a> {% endfor %} </font>
+                  </marquee>
+              </div>
+              <img src="{% static 'healthcenter/images/logo.png' %}" class="img-responsive" style="width: 140px; margin-top: -16px;">
+            </div>
+            <div class="banner-text text-center">
+              <h1 class="white">MNNIT Health Center - Healthcare at your desk</h1>
+              <a href="/hc/opdreg" class="btn btn-appoint">Make an Appointment</a><br>
+              <a href="/hc/docavail" class="btn btn-appoint">Check Doctor Schedule</a><br>
+              <a href="/hc/medavail" class="btn btn-appoint">Check Medicine Availabilty</a><br>
+              <a href="/hc/checkhis" class="btn btn-appoint">Check Patient History</a><br>
+              <br><br>
+            </div>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <footer id="footer">
+    
+    <div class="footer-line">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12 text-center">
+            <div class="credits">
+              
+             
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+ 
+
+  <script
+  src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" ></script>
+  
+</body>
+
+</html>

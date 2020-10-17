@@ -1,0 +1,184 @@
+<!doctype html>
+{% load static %}
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+    <meta name="generator" content="Jekyll v3.8.5">
+    <title>Patient Registration</title>
+
+    <link rel="canonical" href="https://getbootstrap.com/docs/4.3/examples/checkout/">
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" >
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" ></script>
+    <!-- Bootstrap core CSS -->
+
+
+    <style>
+      .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+      }
+
+      @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+      }
+    </style>
+    <!-- Custom styles for this template -->
+    <link href="{% static 'healthcenter/form-validation.css' %}" rel="stylesheet">
+  </head>
+  <body class="bg-light">
+    <div class="container">
+  <div class="py-5 text-center">
+    <img class="d-block mx-auto mb-4" src="{% static 'healthcenter/images/logo.png' %}" alt="" width="72" height="72">
+    <h2>Patient Registration Form</h2>
+    {% if msg %}
+    <div class="alert alert-success" role="alert">
+            {{msg}}
+          </div>
+          {% endif %}
+  </div>
+
+  <div class="row">
+    <div class="col-md-8 order-md-1">
+      <form class="needs-validation" method="POST" action="/hc/registerpatient" novalidate>
+        {% csrf_token %}
+        <div class="row">
+                <div class="col-md-12 mb-3">
+                        <label for="firstName">Card No.</label>
+                        <input type="text" class="form-control" name="cardno" id="firstName" placeholder="" value="" required>
+                        <div class="invalid-feedback">
+                          Valid card number is required.
+                        </div>  
+                      </div>
+          <div class="col-md-12 mb-3">
+            <label for="firstName">Name</label>
+            <input type="text" class="form-control" id="firstName" name="fname" placeholder="" value="" required>
+            <div class="invalid-feedback">
+              Valid Name is required.
+            </div>  
+          </div>
+          
+        </div>
+
+        <div class="mb-3">
+          <label for="username">DOB (DD-MM-YYYY)</label>
+          <div class="input-group">
+            
+            <input type="date" class="form-control" id="dateOfBirth" placeholder="" name="dob" required>
+            <div class="invalid-feedback" style="width: 100%;">
+              Your date of birth is required.
+            </div>
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label for="email">Contact No. </label>
+          <input type="text" class="form-control" id="email" placeholder="" name="cno">
+          <div class="invalid-feedback">
+            Please enter a valid contact no.
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label for="email">Email ID </label>
+          <input type="text" class="form-control" id="email" placeholder="" name="eml">
+          <div class="invalid-feedback">
+            Please enter a valid contact no.
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label for="address">Address</label>
+          <input type="text" class="form-control" id="address" placeholder="" name="addr" required>
+          <div class="invalid-feedback">
+            Please enter your address.
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label for="address">Password</label>
+          <input type="password" class="form-control" id="address" placeholder="" name="pass" required>
+          <div class="invalid-feedback">
+            Please enter your password.
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label for="address2">Card Validity (DD-MM-YYYY)</label>
+          <input type="date" class="form-control" id="cardValid" placeholder="" name="validity">
+        </div>
+
+        <div class="row">
+          <div class="col-md-5 mb-3">
+            <label for="country">Sex</label>
+            <select class="custom-select d-block w-100" id="country" name="sex" required>
+              <option>Male</option>
+              <option>Female</option>
+            </select>
+            <div class="invalid-feedback">
+              Please select a valid sex.
+            </div>
+          </div>
+          <div class="col-md-4 mb-3">
+            <label for="state">Blood Group</label>
+            <select class="custom-select d-block w-100" id="state" name="bg" required>
+              
+              <option>A+</option>
+              <option>A-</option>
+              <option>B+</option>
+              <option>B-</option>
+              <option>AB+</option>
+              <option>O+</option>
+              <option>O-</option>
+            </select>
+            <div class="invalid-feedback">
+              Please provide a valid blood group.
+            </div>
+          </div>
+          
+        </div>
+        <hr class="mb-4">
+<center>
+        <button class="btn btn-primary btn-lg " type="submit">Register</button>
+      
+      </form>
+      <br>
+      <br>
+      <form method="GET" action="/hc">
+        <button class="btn btn-primary btn-lg " type="submit">Back to Home</button>
+
+      </form></center>
+    </div>
+  </div>
+<br>
+
+</div>
+<script type="text/javascript">
+var today = new Date();
+var dd = today.getDate();
+var mm = today.getMonth()+1; //January is 0!
+var yyyy = today.getFullYear();
+ if(dd<10){
+        dd='0'+dd
+    } 
+    if(mm<10){
+        mm='0'+mm
+    } 
+
+today = yyyy+'-'+mm+'-'+dd;
+document.getElementById("dateOfBirth").setAttribute("max", today);
+document.getElementById("cardValid").setAttribute("min", today);
+</script>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+      <script>window.jQuery || document.write('<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"><\/script>')</script>
+        <script src="{% static 'healthcenter/form-validation.js' %}"></script></body>
+</html>
